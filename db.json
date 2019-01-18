@@ -13,6 +13,13 @@
       "hotelName": "Hilton",
       "arrivalDate": "01-19-2019",
       "departureDate": "01-20-2019"
+    },
+    {
+      "id": "3",
+      "name": "Leon Kennedy",
+      "hotelName": "Good Hotel",
+      "arrivalDate": "01-16-19",
+      "departureDate": "01-23-19"
     }
   ]
 }

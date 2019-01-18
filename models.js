@@ -7,12 +7,20 @@ class Reservation {
     })
   }
 
-  list() {
+  getAll() {
     return this.api.get('/reservations').then(res => res.data)
   }
 
+  get(id) {
+    return this.api.get(`/reservations/${id}`).then(res => res.data)
+  }
+
   create(data) {
-    return this.api.post('/reservation', data).then(res => res.data)
+    return this.api.post('/reservations', JSON.stringify(data), {
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.data)
   }
 }
 

@@ -3,7 +3,7 @@ import reservationModel from './models.js'
 
 export const typeDefs = gql`
   type Reservation {
-    id: ID,
+    id: ID!,
     name: String,
     hotelName: String,
     arrivalDate: String,
@@ -12,12 +12,13 @@ export const typeDefs = gql`
 
   type Query {
     reservations: [Reservation]
+    reservation(id: ID!): Reservation
   }
 
   type Mutation {
     createReservation(
-      id: ID,
-      name: String,
+      id: ID!,
+      name: String!,
       hotelName: String,
       arrivalDate: String,
       departureDate: String
@@ -27,13 +28,12 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    reservations() {
-      return reservationModal.list()
-    }
+    reservations: () => reservationModel.getAll(),
+    reservation: (source, { id }) => reservationModel.get(id)
   },
 
   Mutation: {
-    createReservation(source, args) {
+    createReservation: (source, args) => {
       return reservationModel.create(args)
     }
   }
