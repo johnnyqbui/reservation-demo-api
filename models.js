@@ -1,27 +1,23 @@
-import axios from 'axios'
+const reservations = [{
+  "id": 0,
+  "name": "Johnny Bui",
+  "hotelName": "Hilton",
+  "arrivalDate": "01-16-2019",
+  "departureDate": "01-18-2019"
+}, {
+  "id": 1,
+  "name": "Bob Jones",
+  "hotelName": "Hilton",
+  "arrivalDate": "01-19-2019",
+  "departureDate": "01-20-2019"
+}, {
+  "id": 2,
+  "name": "Leon Kennedy",
+  "hotelName": "Good Hotel",
+  "arrivalDate": "01-16-19",
+  "departureDate": "01-23-19"
+}]
 
-class Reservation {
-  constructor() {
-    this.api = axios.create({
-      baseURL: 'http://localhost:3000', // json-server endpoint
-    })
-  }
-
-  getAll() {
-    return this.api.get('/reservations').then(res => res.data)
-  }
-
-  get(id) {
-    return this.api.get(`/reservations/${id}`).then(res => res.data)
-  }
-
-  create(data) {
-    return this.api.post('/reservations', JSON.stringify(data), {
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.data)
-  }
+export {
+  reservations
 }
-
-export default new Reservation()

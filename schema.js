@@ -1,8 +1,8 @@
 import { gql } from 'apollo-server-express'
-import reservationModel from './models.js'
+import { reservations } from './models.js'
 
 export const typeDefs = gql`
-  type Reservation {
+  type reservations {
     id: ID!,
     name: String,
     hotelName: String,
@@ -11,8 +11,9 @@ export const typeDefs = gql`
   }
 
   type Query {
-    reservations: [Reservation]
-    reservation(id: ID!): Reservation
+    status: String
+    reservations: [reservations]
+    reservation(id: ID!): reservations
   }
 
   type Mutation {
@@ -22,19 +23,21 @@ export const typeDefs = gql`
       hotelName: String,
       arrivalDate: String,
       departureDate: String
-    ): Reservation
+    ): reservations
   }
 `
 
 export const resolvers = {
   Query: {
-    reservations: () => reservationModel.getAll(),
-    reservation: (source, { id }) => reservationModel.get(id)
+    reservations: () => {
+      return reservations
+    },
+    reservation: (source, { id }) => data.reservations.find(reservation => reservation.id === id)
   },
 
   Mutation: {
     createReservation: (source, args) => {
-      return reservationModel.create(args)
+      return reservations.create(args)
     }
   }
 }

@@ -1,6 +1,8 @@
-import { ApolloServer } from 'apollo-server'
+import express from 'express'
+import { ApolloServer } from 'apollo-server-express'
 import { resolvers, typeDefs } from './schema'
 
+const PORT = 8000
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -9,6 +11,14 @@ const server = new ApolloServer({
   playground: true,
 })
 
-server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`);
-});
+const app = express()
+
+server.applyMiddleware({app, path: '/graphql'})
+
+app.get('/api/status', ((req, res) => {
+  res.send({status: 'ok'})
+}))
+
+app.listen({ port: PORT },() => {
+  console.log(`Server ready at http://localhost:${PORT}${server.graphqlPath}`);
+})
